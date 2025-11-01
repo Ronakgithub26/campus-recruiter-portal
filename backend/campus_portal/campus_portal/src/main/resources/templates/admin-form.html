@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Form</title>
+</head>
+<body>
+ <h1>Create Admin</h1>
+  <form th:action="@{/admin/form}" th:object="${admin}" method="post">
+
+      <label>Id:</label>
+      <input type="text" th:field="*{id}" required/><br/><br/>
+
+    <label>Name:</label>
+      <input type="text" th:field="*{name}" required/><br/><br/>
+
+    <label>Email:</label>
+      <input type="email" th:field="*{email}" required/><br/><br/>
+
+      <label>Password:</label>
+      <input type="password" th:field="*{password}" required/><br/><br/>
+
+      <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

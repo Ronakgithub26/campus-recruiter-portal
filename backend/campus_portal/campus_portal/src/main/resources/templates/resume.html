@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #2b2b2b; }
+        .section { margin-top: 20px; }
+        .skills span {
+            display: inline-block;
+            background: #eef;
+            margin: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${resume.name}"></h1>
+<p>Email: <span th:text="${resume.email}"></span></p>
+<p>Phone: <span th:text="${resume.phone}"></span></p>
+
+<div class="section">
+    <h3>Summary</h3>
+    <p th:text="${resume.summary}"></p>
+</div>
+
+<div class="section skills">
+    <h3>Skills</h3>
+    <div th:each="skill : ${resume.skills}">
+        <span th:text="${skill}"></span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# ===== FRONTEND =====
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# ===== BACKEND =====
+backend/target/
+
+# ===== IDE / SYSTEM FILES =====
+.idea/
+.vscode/
+*.iml
+*.log
+.DS_Store
+Thumbs.db

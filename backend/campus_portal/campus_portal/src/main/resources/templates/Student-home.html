@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Student Home</title>
+</head>
+<body>
+<center>
+  <h1>Welcome, <span th:text="${student.name}">Student</span>!</h1>
+
+  <h3>Profile Actions</h3>
+
+  <!-- Edit Details -->
+  <form th:action="@{/student/edit}" th:object="${student}" method="get">
+<!--      passing student id as hidden field-->
+      <input type="hidden" name="id" th:value="${student.id}">
+    <button type="submit" >Edit Profile Details</button>
+  </form>
+  <br/>
+
+   Upload Resume
+  <form th:action="@{/student/upload-resume}" method="post" enctype="multipart/form-data">
+    <label>Upload Resume (PDF):</label>
+    <input type="file" name="resume" accept="application/pdf" required>
+    <button type="submit">Upload</button>
+  </form>
+  <br/>
+
+  <!-- Update Profile Photo -->
+  <form th:action="@{/student/upload-photo}" method="post" enctype="multipart/form-data">
+    <label>Upload Profile Photo:</label>
+    <input type="file" name="photo" accept="image/*" required>
+    <button type="submit">Update</button>
+  </form>
+</center>
+</body>
+</html>
