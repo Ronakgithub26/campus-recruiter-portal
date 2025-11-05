@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -49,6 +50,7 @@ public class StudentController
         existing.setContact(student.getContact());
         existing.setCgpa(student.getCgpa());
         existing.setGender(student.getGender());
+        existing.setCollege(student.getCollege());
         existing.setDept(student.getDept());
         existing.setPassword(student.getPassword());
 
@@ -57,20 +59,26 @@ public class StudentController
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Student> login(@RequestBody Map<String, String> credentials) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> credentials) {
         String email = credentials.get("email");
         String password = credentials.get("password");
 
         Student student = studentService.getByEmail(email);
         if (student == null) {
-            return ResponseEntity.status(401).body(null); // User not found
+            return ResponseEntity.status(401).body(Map.of("message", "User not found"));
         }
 
         if (!student.getPassword().equals(password)) {
-            return ResponseEntity.status(401).body(null); // Wrong password
+            return ResponseEntity.status(401).body(Map.of("message", "Invalid password"));
         }
 
-        return ResponseEntity.ok(student); // Success
+        // For now, we’re not using JWT yet, so just send a placeholder token
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", "dummy-token"); // Later, this will come from Spring Security JWT
+        response.put("user", student);
+
+        return ResponseEntity.ok(response);
     }
+
 
 }

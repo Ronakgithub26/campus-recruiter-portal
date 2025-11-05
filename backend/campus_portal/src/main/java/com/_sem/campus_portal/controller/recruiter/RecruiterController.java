@@ -24,15 +24,6 @@ public class RecruiterController
     @Autowired
     private JobRepository jobRepository;
 
-//    @PostMapping("/register")
-//    public ResponseEntity<?> register(@RequestBody Recruiter recruiter) {
-//        if (recruiterRepository.findByEmail(recruiter.getEmail()) != null) {
-//            return ResponseEntity.badRequest().body("Email already registered");
-//        }
-//        recruiterRepository.save(recruiter);
-//        return ResponseEntity.ok("Recruiter registered successfully");
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<?> registerRecruiter(@RequestBody Recruiter recruiter) {
         Recruiter savedRecruiter = recruiterRepository.save(recruiter);

@@ -88,6 +88,11 @@ public class Student
         this.gender = gender;
     }
 
+    private String college;
+
+    public String getCollege() { return college; }
+    public void setCollege(String college) { this.college = college; }
+
     private String email;
     private String password;
     private String contact;
