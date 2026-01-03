@@ -35,6 +35,9 @@ function Login() {
     return "";
   };
 
+  // const navigate = useNavigate();
+  const handleClose = () => navigate("/");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -53,24 +56,41 @@ function Login() {
 
     try {
       const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  });
 
-      if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem(
-          `${formData.role}_token`,
-          JSON.stringify({ token: data.token, user: data.user })
-        );
-        navigate(
-          formData.role === "student" ? "/student" : "/recruiter/dashboard"
-        );
-      } else {
-        const errData = await res.json();
-        setErrorMsg(errData.message || "Invalid credentials. Try again.");
-      }
+  if (res.ok) {
+    const data = await res.json();
+
+    // ✅ Save login info cleanly under one key
+    if (formData.role === "student") {
+      localStorage.setItem(
+        "student_token",
+        JSON.stringify({
+          token: data.token,
+          user: data.user, // should include email, name, etc.
+        })
+      );
+    } else {
+      localStorage.setItem(
+        "recruiter_token",
+        JSON.stringify({
+          token: data.token,
+          user: data.user,
+        })
+      );
+    }
+
+    // ✅ Redirect to dashboard based on role
+    navigate(
+      formData.role === "student" ? "/student/profile" : "/recruiter/dashboard"
+    );
+  } else {
+    const errData = await res.json();
+    setErrorMsg(errData.message || "Invalid credentials. Try again.");
+  }
     } catch (err) {
       console.error("Login error:", err);
       setErrorMsg("Server error. Please try again later.");
@@ -100,6 +120,15 @@ function Login() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative z-10 bg-white/70 backdrop-blur-2xl border border-white/40 shadow-2xl rounded-3xl p-10 w-full max-w-sm hover:shadow-blue-200 transition-all duration-300"
       >
+
+        <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition text-2xl font-bold"
+          title="Close"
+        >
+          ×
+        </button>
+
         {/* Header */}
         <h2 className="text-center text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 tracking-tight">
           Welcome Back 👋

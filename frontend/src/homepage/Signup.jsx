@@ -47,46 +47,65 @@ function Signup() {
     return "";
   };
 
+  const handleClose = () => navigate("/");
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMsg("");
+  e.preventDefault();
+  setErrorMsg("");
 
-    if (!formData.name.trim()) return setErrorMsg("Enter your full name.");
-    if (!formData.email.includes("@"))
-      return setErrorMsg("Enter a valid email address.");
+  if (!formData.name.trim()) return setErrorMsg("Enter your full name.");
+  if (!formData.email.includes("@"))
+    return setErrorMsg("Enter a valid email address.");
 
-    const passwordError = validatePassword(formData.password);
-    if (passwordError) return setErrorMsg(passwordError);
+  const passwordError = validatePassword(formData.password);
+  if (passwordError) return setErrorMsg(passwordError);
 
-    setLoading(true);
-    const endpoint =
-      formData.role === "recruiter"
-        ? "http://localhost:8090/recruiter/register"
-        : "http://localhost:8090/student/register";
+  setLoading(true);
+  const endpoint =
+    formData.role === "recruiter"
+      ? "http://localhost:8090/recruiter/register"
+      : "http://localhost:8090/student/register";
 
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        localStorage.setItem(
-          `${formData.role}_user`,
-          JSON.stringify({ email: data.email, name: data.name })
-        );
-        navigate(formData.role === "recruiter" ? "/recruiter/dashboard" : "/student");
-      } else {
-        setErrorMsg(data.message || "Signup failed. Try again.");
-      }
-    } catch (error) {
-      console.error("Signup error:", error);
-      setErrorMsg("Server error. Please try again later.");
-    } finally {
-      setLoading(false);
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    // ✅ Parse once
+    const data = await response.json();
+
+    if (response.ok) {
+      // ✅ Clear old data to prevent stale info
+      localStorage.clear();
+
+      // ✅ Unified storage format (same as login)
+      localStorage.setItem(
+        `${formData.role}_token`,
+        JSON.stringify({
+          token: data.token || "", // may be empty if token not implemented yet
+          user: {
+            email: data.email,
+            name: data.name,
+            role: formData.role,
+          },
+        })
+      );
+
+      // ✅ Redirect
+      navigate(formData.role === "recruiter" ? "/recruiter/dashboard" : "/student");
+    } else {
+      setErrorMsg(data.message || "Signup failed. Try again.");
     }
-  };
+  } catch (error) {
+    console.error("Signup error:", error);
+    setErrorMsg("Server error. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="relative min-h-screen overflow-hidden flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100">
@@ -94,6 +113,14 @@ function Signup() {
       <div className="absolute inset-0 opacity-80 blur-[2px] pointer-events-none">
         <HomePage />
       </div>
+
+      <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition text-2xl font-bold"
+          title="Close"
+        >
+          ×
+      </button>
 
       {/* 💫 Floating Blue Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

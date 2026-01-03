@@ -21,6 +21,7 @@ import Profile from "./student/pages/Profile";
 import Login from "./homepage/Login";
 import Signup from "./homepage/Signup";
 import ResumeForm from "./student/pages/ResumeForm";
+import ProfileGuard from "./student/guards/ProfileGuard";
 
 function App() {
   return (
@@ -43,12 +44,38 @@ function App() {
 
         {/* ===== Student Portal ===== */}
         <Route path="/student" element={<StudentDashboard />}>
-          <Route index element={<StudentHome />} />
-          <Route path="jobs" element={<JobsList />} />
-          <Route path="job/:id" element={<JobDetails />} />
-          <Route path="create-resume" element={<ResumeForm />} />
-          <Route path="applications" element={<MyApplications />} />
+          <Route index element={
+            <ProfileGuard>
+              <StudentHome />
+            </ProfileGuard>
+          } />
+
+          <Route path="jobs" element={
+            <ProfileGuard>
+              <JobsList />
+            </ProfileGuard>
+          } />
+
+          <Route path="job/:id" element={
+            <ProfileGuard>
+              <JobDetails />
+            </ProfileGuard>
+          } />
+
+          {/* Allowed without completion */}
           <Route path="profile" element={<Profile />} />
+
+          <Route path="create-resume" element={
+            <ProfileGuard>
+              <ResumeForm />
+            </ProfileGuard>
+          } />
+
+          <Route path="applications" element={
+            <ProfileGuard>
+              <MyApplications />
+            </ProfileGuard>
+          } />
         </Route>
       </Routes>
     </Router>

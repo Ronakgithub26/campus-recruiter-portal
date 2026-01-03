@@ -41,7 +41,7 @@ export default function JobsList() {
             <div
               key={job.id || job._id}
               className="bg-white p-4 rounded shadow-sm flex justify-between items-center"
-            >
+            > 
               <div>
                 <div className="font-semibold">{job.title}</div>
                 <div className="text-sm text-gray-500">

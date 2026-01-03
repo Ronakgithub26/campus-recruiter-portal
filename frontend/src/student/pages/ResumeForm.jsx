@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import * as htmlToImage from "html-to-image";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
 export default function ResumeBuilder() {
   const rajasthanColleges = [
@@ -108,15 +108,32 @@ export default function ResumeBuilder() {
     setFormData((prev) => ({ ...prev, summary }));
   };
 
-  const handleDownload = async () => {
-    const input = document.getElementById("resume-preview");
-    const canvas = await html2canvas(input);
+  const handleSaveAndDownload = async () => {
+  try {
+    const node = document.getElementById("resume-preview");
+
+    const response = await fetch("http://localhost:8090/resume/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    if (!response.ok) throw new Error("Failed to save resume");
+    const savedResume = await response.json();
+    console.log("✅ Resume saved successfully with ID:", savedResume.id);
+
+    const dataUrl = await htmlToImage.toPng(node);
     const pdf = new jsPDF("p", "mm", "a4");
+    const imgProps = pdf.getImageProperties(dataUrl);
     const width = pdf.internal.pageSize.getWidth();
-    const height = (canvas.height * width) / canvas.width;
-    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, width, height);
+    const height = (imgProps.height * width) / imgProps.width;
+    pdf.addImage(dataUrl, "PNG", 0, 0, width, height);
     pdf.save(`${formData.name || "resume"}.pdf`);
-  };
+  } catch (err) {
+    console.error("❌ Error:", err);
+  }
+};
+
+
 
   const internshipRoles = [
     "Frontend Developer",
@@ -240,7 +257,13 @@ export default function ResumeBuilder() {
           </div>
 
           <div className="mt-4 flex justify-end">
-            <button onClick={handleDownload} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-lg">Download PDF</button>
+            <button
+              onClick={handleSaveAndDownload}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-lg"
+            >
+              Save & Download PDF
+            </button>
+
           </div>
         </div>
 

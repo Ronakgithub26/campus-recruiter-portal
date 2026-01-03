@@ -2,3 +2,31 @@
 @tailwind components;
 @tailwind utilities; */
 @import "tailwindcss";
+
+@keyframes scrollUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scrollUp 10s linear infinite;
+}
+
+.notice-scroll {
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.notice-scroll ul {
+  animation: scrollUp 8s linear infinite;
+}
+
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}

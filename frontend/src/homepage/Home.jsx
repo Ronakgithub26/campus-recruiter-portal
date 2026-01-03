@@ -9,7 +9,14 @@ import {
   Sparkles,
 } from "lucide-react";
 
+
 const HomePage = () => {
+
+  const navigate = useNavigate();
+  const handlePortalClick = (role) => {
+    navigate("/login", { state: { role } });
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-200 via-white to-blue-100 overflow-hidden">
       {/* Navbar */}
@@ -76,14 +83,14 @@ const HomePage = () => {
           </p>
           <div className="space-x-4">
             <button
-              onClick={() => navigate("/student")}
+              onClick={() => handlePortalClick("student")}
               className="bg-blue-600 text-white px-7 py-3 rounded-lg hover:bg-blue-700 hover:shadow-lg hover:scale-105 transition-all"
             >
               Go to Student Portal
             </button>
 
             <button
-              onClick={() => navigate("/recruiter")}
+              onClick={() => handlePortalClick("recruiter")}
               className="border border-blue-600 text-blue-600 px-7 py-3 rounded-lg hover:bg-blue-50 hover:scale-105 transition-all"
             >
               Go to Recruiter Portal
