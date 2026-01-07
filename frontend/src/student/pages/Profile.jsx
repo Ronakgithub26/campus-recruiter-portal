@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import.meta.env.VITE_API_BASE_URL
+
 
 const Profile = () => {
   const rajasthanColleges = [
@@ -49,7 +51,7 @@ const Profile = () => {
 
   const fetchStudent = async () => {
     try {
-      const res = await fetch(`http://localhost:8090/student/${email}`);
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/student/${email}`);
       if (res.ok) {
         const student = await res.json();
         setFormData(student);
@@ -106,7 +108,7 @@ const Profile = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:8090/student/update/${formData.email}`,
+        `${import.meta.env.VITE_API_BASE_URL}/student/update/${formData.email}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

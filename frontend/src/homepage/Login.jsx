@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import HomePage from "./Home"; // ✅ background component
+import.meta.env.VITE_API_BASE_URL
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -51,8 +52,9 @@ function Login() {
     setLoading(true);
     const endpoint =
       formData.role === "recruiter"
-        ? "http://localhost:8090/recruiter/login"
-        : "http://localhost:8090/student/login";
+      ? `${import.meta.env.VITE_API_BASE_URL}/recruiter/login`
+      : `${import.meta.env.VITE_API_BASE_URL}/student/login`;
+
 
     try {
       const res = await fetch(endpoint, {

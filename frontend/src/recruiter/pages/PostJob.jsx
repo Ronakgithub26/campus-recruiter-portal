@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import.meta.env.VITE_API_BASE_URL
+
 
 export default function PostJob() {
   const [formData, setFormData] = useState({
@@ -28,7 +30,7 @@ export default function PostJob() {
         ? { ...formData, recruiterEmail }
         : formData;
 
-      const response = await fetch("http://localhost:8090/recruiter/post-job", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recruiter/post-job`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

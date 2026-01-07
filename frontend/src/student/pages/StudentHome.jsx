@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import.meta.env.VITE_API_BASE_URL
+
 
 export default function StudentHome() {
   const [stats, setStats] = useState({
@@ -16,11 +18,11 @@ export default function StudentHome() {
 
     if (!email) return;
 
-    fetch(`http://localhost:8090/student/stats/${email}`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/student/stats/${email}`)
       .then((res) => res.json())
       .then((data) => setStats(data));
 
-    fetch("http://localhost:8090/student/notices")
+    fetch("${import.meta.env.VITE_API_BASE_URL}/student/notices")
       .then((res) => res.json())
       .then((data) => {
         setAnnouncements(data.announcements);

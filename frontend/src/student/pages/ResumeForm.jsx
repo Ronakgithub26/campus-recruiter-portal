@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import * as htmlToImage from "html-to-image";
 import jsPDF from "jspdf";
+import.meta.env.VITE_API_BASE_URL
+
 
 export default function ResumeBuilder() {
   const rajasthanColleges = [
@@ -112,7 +114,7 @@ export default function ResumeBuilder() {
   try {
     const node = document.getElementById("resume-preview");
 
-    const response = await fetch("http://localhost:8090/resume/save", {
+    const response = await fetch('${import.meta.env.VITE_API_BASE_URL}/resume/save', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

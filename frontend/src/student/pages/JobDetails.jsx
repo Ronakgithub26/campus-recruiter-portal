@@ -1,5 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import.meta.env.VITE_API_BASE_URL
+
 
 export default function JobDetails() {
   const { id } = useParams();
@@ -18,7 +20,7 @@ export default function JobDetails() {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const response = await fetch(`http://localhost:8090/recruiter/jobs/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recruiter/jobs/${id}`);
         if (response.ok) {
           const data = await response.json();
           setJob(data);
@@ -44,7 +46,7 @@ export default function JobDetails() {
   const formData = new FormData();
   formData.append("file", selectedFile);
 
-  const res = await fetch("http://localhost:8090/resume/upload", {
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/resume/upload`, {
     method: "POST",
     body: formData,
   });
@@ -82,7 +84,7 @@ export default function JobDetails() {
 
     console.log("⛳ FINAL PAYLOAD GOING TO BACKEND:", payload);
 
-    const res = await fetch("http://localhost:8090/student/apply", {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/student/apply`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

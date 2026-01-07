@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import HomePage from "./Home";
+import.meta.env.VITE_API_BASE_URL
+
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -63,8 +65,10 @@ function Signup() {
   setLoading(true);
   const endpoint =
     formData.role === "recruiter"
-      ? "http://localhost:8090/recruiter/register"
-      : "http://localhost:8090/student/register";
+      formData.role === "recruiter"
+      ? `${import.meta.env.VITE_API_BASE_URL}/recruiter/register`
+      : `${import.meta.env.VITE_API_BASE_URL}/student/register`;
+
 
   try {
     const response = await fetch(endpoint, {

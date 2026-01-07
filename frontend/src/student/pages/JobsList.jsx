@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import.meta.env.VITE_API_BASE_URL
+
 
 export default function JobsList() {
   const [jobs, setJobs] = useState([]); // ✅ Initialize with empty array
@@ -9,7 +11,7 @@ export default function JobsList() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:8090/recruiter/jobs");
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recruiter/jobs`);
         if (response.ok) {
           const data = await response.json();
           setJobs(data || []); // ✅ Defensive check in case backend returns null

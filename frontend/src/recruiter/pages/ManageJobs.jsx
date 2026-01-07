@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import JobCard from "../components/JobCard";
+import.meta.env.VITE_API_BASE_URL
+
 
 export default function ManageJobs() {
   const [jobs, setJobs] = useState([]);
@@ -10,7 +12,7 @@ export default function ManageJobs() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:8090/recruiter/jobs");
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recruiter/jobs`);
         if (response.ok) {
           const data = await response.json();
           setJobs(data);
@@ -37,7 +39,7 @@ export default function ManageJobs() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this job?")) {
       try {
-        const res = await fetch(`http://localhost:8090/recruiter/deletejob/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recruiter/jobs`, {
           method: "DELETE",
         });
 
