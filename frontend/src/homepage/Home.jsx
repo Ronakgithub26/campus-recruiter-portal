@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Users,
   Briefcase,
@@ -39,18 +39,24 @@ const HomePage = () => {
           <a href="#about" className="hover:text-blue-600 transition-colors">
             About
           </a>
-          <a
+          {/* <a
             href="/login"
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:shadow-lg hover:scale-105 transition"
           >
             Login
-          </a>
-          <a
-            href="/signup"
-            className="bg-gray-100 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 hover:scale-105 transition"
+          </a> */}
+          <Link
+           to="/login"
+           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:shadow-lg hover:scale-105 transition"
           >
-            Sign Up
-          </a>
+          Login
+          </Link>
+          <Link
+            to="/signup"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:shadow-lg hover:scale-105 transition"
+          >
+          Signup
+          </Link>
         </nav>
       </motion.header>
 
@@ -216,10 +222,10 @@ const HomePage = () => {
       <footer className="bg-gray-900 text-white py-10 text-center">
         <p className="text-sm">
           © 2025 Campus Recruitment Portal | Developed by
-          <span className="text-blue-400"> Manish</span>,
-          <span className="text-blue-400"> Ronak</span>,
+          <span className="text-blue-400"> Ronak</span>
+          {/* <span className="text-blue-400"> Ronak</span>,
           <span className="text-blue-400"> Rozi</span> &
-          <span className="text-blue-400"> Nikita</span>
+          <span className="text-blue-400"> Nikita</span> */}
         </p>
         <div className="mt-3 text-gray-400 text-xs">
           Built with ❤ using React.js, TailwindCSS, and Framer Motion.
@@ -230,3 +236,16 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
+//This REACT+VITE app is an SPA(SINGLE PAGE APPLICATION), meaning it loads only once
+// and then everything else happens inside the browser using JavaScript-without reloading the whole page
+
+//how spa(react+vite) works over traditional websites, traditional websites(using php,jsp) when requested to server for /home sends home.html
+// /login sends new file login.html hence every click new request to server loading new html page
+
+//but now when someone opens https://campus-recruiter-portal-frontend.onrender.com it renders only sends index.html, then react takes over browser
+// /login ->react shows login.jsx, /signup -> react shows Signup.jsx, now new hmtl files are downloade
+// React changes the page internally only using javascript
+
+
