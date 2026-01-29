@@ -206,8 +206,8 @@ const HomePage = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed"
-        >
+          className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed" 
+        > 
           The{" "}
           <span className="font-semibold text-blue-600">
             Smart Campus Recruitment Portal

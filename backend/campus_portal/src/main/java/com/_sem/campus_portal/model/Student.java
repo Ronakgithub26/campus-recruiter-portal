@@ -1,5 +1,6 @@
 package com._sem.campus_portal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import java.util.List;
 
 //@Entity -> only used for JPA for Relational Databases like Mysql or Postgresql
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 //@Table(name = "students")  //creates table automatically in db
 @Data  //generates getters, setters, toString equals, hashcode
 @NoArgsConstructor
