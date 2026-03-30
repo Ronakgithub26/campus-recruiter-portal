@@ -65,7 +65,6 @@ function Signup() {
   setLoading(true);
   const endpoint =
     formData.role === "recruiter"
-      formData.role === "recruiter"
       ? `${import.meta.env.VITE_API_BASE_URL}/recruiter/register`
       : `${import.meta.env.VITE_API_BASE_URL}/student/register`;
 
