@@ -70,6 +70,7 @@ function Signup() {
 
 
   try {
+      console.log("Endpoint:", endpoint);
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
