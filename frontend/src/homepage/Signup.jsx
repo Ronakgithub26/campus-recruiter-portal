@@ -63,6 +63,9 @@ function Signup() {
   if (passwordError) return setErrorMsg(passwordError);
 
   setLoading(true);
+
+  const BASE_URL = "https://campus-recruitment-portal-mc9e.onrender.com";
+
   const endpoint =
     formData.role === "recruiter"
       ? `${import.meta.env.VITE_API_BASE_URL}/recruiter/register`
