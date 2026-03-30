@@ -13,8 +13,8 @@ public class WebConfig implements WebMvcConfigurer
     {
         registry.addMapping("/**")
                 .allowedOrigins("https://campus-recruiter-portal-frontend.onrender.com")
-                .allowedMethods("POST", "GET", "PUT", "DELETE","OPTIONS")
+                .allowedMethods("*")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(false);
     }
 }
